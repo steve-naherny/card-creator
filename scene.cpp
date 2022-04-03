@@ -1,15 +1,10 @@
 #include "scene.h"
 #include "cardinfo.h"
 
-constexpr int buffer = 50;
+constexpr int buffer = 25;
 Scene::Scene()
 {
-    setSceneRect(0,0,700,10000);
-}
-
-void Scene::load(const QString &)
-{
-    //TODO
+    setBackgroundBrush(QBrush(QColor("#fffdd0")));
 }
 
 void Scene::refresh()
@@ -23,7 +18,7 @@ void Scene::refresh()
        auto item = card->generateGraphicsItem(d.context, this);
        item->moveBy(x + buffer, y + buffer);
        x += cardDimensions.width();
-       if(x > sceneRect().width())
+       if(x + cardDimensions.width() > 5 * cardDimensions.width())
        {
            x = 0;
            y += cardDimensions.height() + buffer;
@@ -35,7 +30,7 @@ void Scene::refresh()
       auto item = CardInfo::generateCardBackGraphicsItem(d.context, this);
       item->moveBy(x + buffer, y + buffer);
       x += cardDimensions.width();
-      if(x > sceneRect().width())
+      if(x + cardDimensions.width() > 5 * cardDimensions.width())
       {
           x = 0;
           y += cardDimensions.height() + buffer;

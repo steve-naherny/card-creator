@@ -14,11 +14,7 @@ class Scene : public QGraphicsScene
 public:
   Scene();
 
-  void load(const QString &);
-
   void refresh();
-
-  QGraphicsItemGroup* generateCardBack();
 
   Deck d;
 };

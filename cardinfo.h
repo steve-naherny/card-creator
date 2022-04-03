@@ -15,54 +15,60 @@ class CardInfo : public QObject
 {
 public:
     CardInfo() {}
-    enum Type { None, Combat, Super, Special, Minor };
-    int defense = 0;
-    int attack = 0;
-    QString text;
+    enum PlayType { None, OnTurn, WhenDefending, WhenAttacking, WhenAttackingDefending };
+    QString defense;
+    QString attack;
+    QString description;
     QString title;
-    virtual Type type() { return None; };
+    PlayType playType = None;
+    static QString toString(PlayType pt);
     static QGraphicsItemGroup *generateCardBackGraphicsItem(Context &context, QGraphicsScene *scene);
     QGraphicsItemGroup *generateCombatCard(const Context::Character &character, const Context::CombatInfo &info, QGraphicsScene *scene);
+    QGraphicsItemGroup *generateSpecialCard(const Context::Character &character, const Context::SpecialInfo &info, QGraphicsScene *scene);
+    QGraphicsItemGroup *generateUniqueCard(const Context::Character &character, const Context::UniqueInfo &info, QGraphicsScene *scene);
     virtual QGraphicsItemGroup* generateGraphicsItem(Context &, QGraphicsScene *) { return nullptr; };
+    virtual QString cardType() { return "Invalid"; }
 };
 
-class SuperCard : public CardInfo
+class MainUniqueCard : public CardInfo
 {
-    inline Type type()
-    {
-       return Super;
-    }
+    public:
+    QString cardType() { return "MainUnique"; }
     QGraphicsItemGroup* generateGraphicsItem(Context &context, QGraphicsScene *scene);
 };
 
-
-class SpecialCard : public CardInfo
+class MinorUniqueCard : public CardInfo
 {
-    inline Type type()
-    {
-       return Special;
-    }
+    public:
+    QString cardType() { return "MinorUnique"; }
     QGraphicsItemGroup* generateGraphicsItem(Context &context, QGraphicsScene *scene);
 };
 
+class MainSpecialCard : public CardInfo
+{
+    public:
+    QString cardType() { return "MainSpecial"; }
+    QGraphicsItemGroup* generateGraphicsItem(Context &context, QGraphicsScene *scene);
+};
+
+class MinorSpecialCard : public CardInfo
+{
+    public:
+    QString cardType() { return "MinorSpecial"; }
+    QGraphicsItemGroup* generateGraphicsItem(Context &context, QGraphicsScene *scene);
+};
 
 class MinorCombatCard : public CardInfo
 {
-    inline Type type()
-    {
-       return Minor;
-    }
+    public:
+    QString cardType() { return "MinorCombat"; }
     QGraphicsItemGroup* generateGraphicsItem(Context &context, QGraphicsScene *scene);
 };
 
-class CombatCard : public CardInfo
+class MainCombatCard : public CardInfo
 {
-    inline Type type()
-    {
-       return Combat;
-    }
+public:
+    QString cardType() { return "MainCombat"; }
     QGraphicsItemGroup* generateGraphicsItem(Context &context, QGraphicsScene *scene);
 };
-
-
 #endif // CARDINFO_H

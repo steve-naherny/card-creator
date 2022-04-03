@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include "savefile.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -16,6 +16,7 @@ public:
     ~MainWindow();
 
 private:
+    SaveFile saveFile;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

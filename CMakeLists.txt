@@ -11,8 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools PrintSupport)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools PrintSupport)
 
 set(TS_FILES card-creator_en_US.ts)
 
@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
         cardinfo.cpp
 
         context.h
+        context.cpp
 
         deck.h
         deck.cpp
@@ -30,6 +31,9 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+
+        savefile.h
+        savefile.cpp
 
         scene.h
         scene.cpp
@@ -64,7 +68,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(card-creator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(card-creator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport)
 
 set_target_properties(card-creator PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

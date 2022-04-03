@@ -12,20 +12,19 @@
 class Deck
 {
 public:
-  Deck();
+  void addMainUnique(const QString &title, CardInfo::PlayType playType, const QString &description, const QString &attack = QString(), const QString &defense = QString());
 
-  void load(const QString &path)
-  {
+  void addMinorUnique(const QString &title, CardInfo::PlayType playType, const QString &description, const QString &attack = QString(), const QString &defense = QString());
 
-  }
+  void addMinorSpecial(const QString &title, CardInfo::PlayType playType, const QString &description);
 
-  void addSpecial(const QString &title, const QString &text);
+  void addMainSpecial(const QString &title, CardInfo::PlayType playType, const QString &description);
 
-  void addSuper(const QString &title, const QString &text, int attack = 0, int defense = 0);
+  void addMainCombat(const QString &attack, const QString &defense);
 
-  void addCombat(int attack, int defense);
+  void addMinorCombat(const QString &attack, const QString &defense);
 
-  void addMinorCombat(int attack, int defense);
+  QPointer<CardInfo> generateCard(const QString &cardType);
 
   QList<QPointer<CardInfo>> cards;
   Context context;

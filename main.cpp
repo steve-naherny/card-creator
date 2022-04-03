@@ -12,6 +12,7 @@
 #include <QStandardPaths>
 #include <QGraphicsView>
 
+#include "savefile.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
+
 
     MainWindow w;
     w.show();
