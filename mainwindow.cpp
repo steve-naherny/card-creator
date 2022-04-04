@@ -45,9 +45,12 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     auto exportAction = menu->addAction("Export...");
-    connect(exportAction, &QAction::triggered, this, [view](){
+    connect(exportAction, &QAction::triggered, this, [scene](){
         QPrintPreviewDialog dialog;
-        //scene->render(dialog->printer());
+        connect(&dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+            QPainter painter(previewPrinter);
+            scene->render(&painter);
+        });
         dialog.exec();
     });
 
