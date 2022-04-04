@@ -72,7 +72,20 @@ struct Context
     {
         QPair<QString, QPixmap> foreground;
         QPair<QString, QPixmap> background;
-        QPair<QString, QPixmap> epicDuelsTitle;
+
+        static QPointF foreGroundPosition()
+        {
+            const double yRatio = 0.75;
+            auto s = cardSize();
+            return QPointF(0, s.height() * yRatio);
+        }
+
+        static QSize foreGroundSize()
+        {
+            const double yRatio = 0.25;
+            auto s = cardSize();
+            return QSize(s.width(), s.height() * yRatio);
+        }
     } cardBack;
 
     struct SpecialInfo
@@ -159,8 +172,6 @@ struct Context
             return QPointF(s.width() * xRatio, s.height() * yRatio);
         }
     } combat;
-
-    QPair<QString, QPixmap> cardBackPortrait;
 };
 
 #endif // CONTEXT_H

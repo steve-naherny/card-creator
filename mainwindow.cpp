@@ -16,6 +16,7 @@
 #include <QHBoxLayout>
 #include <QFormLayout>
 #include <QFileDialog>
+#include <QtPrintSupport/QPrintPreviewDialog>
 
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrinter>
@@ -33,18 +34,23 @@ MainWindow::MainWindow(QWidget *parent)
     QMenu *menu = new QMenu("File");
     auto openAction = menu->addAction("Open...");
     connect(openAction, &QAction::triggered, this, [this, scene](){
-        QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/starwars-epic-duels/";
-        QString selected = QFileDialog::getExistingDirectory(this, "Select File", path);
-        if(!selected.isEmpty())
+        QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/starwars-epic-duels/";
+        QString selectedFolder = QFileDialog::getExistingDirectory(this, "Select File", defaultPath);
+        if(!selectedFolder.isEmpty())
         {
-            SaveFile().load(scene->d, path);
+            scene->clear();
+            saveFile.load(scene->d, selectedFolder);
             scene->refresh();
         }
     });
+
     auto exportAction = menu->addAction("Export...");
     connect(exportAction, &QAction::triggered, this, [view](){
-
+        QPrintPreviewDialog dialog;
+        //scene->render(dialog->printer());
+        dialog.exec();
     });
+
     auto saveAsAction = menu->addAction("Save As...");
     connect(saveAsAction, &QAction::triggered, this, [this, scene](){
         QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/starwars-epic-duels";
@@ -54,13 +60,18 @@ MainWindow::MainWindow(QWidget *parent)
             saveFile.save(scene->d, selected);
         }
     });
+
     auto saveAction = menu->addAction("Save");
-    connect(saveAction, &QAction::triggered, this, [this, scene](){
+    connect(saveAction, &QAction::triggered, this, [this, scene]() {
          saveFile.save(scene->d);
     });
-    menu->addAction("Exit");
-    menuBar()->addMenu(menu);
 
+    auto quitAction = menu->addAction("Exit");
+    connect(quitAction, &QAction::triggered, []() {
+        qApp->quit();
+    });
+
+    menuBar()->addMenu(menu);
     setCentralWidget(view);
 }
 

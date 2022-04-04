@@ -71,7 +71,8 @@ void SaveFile::loadCards(Deck &deck, QJsonObject &json)
 void SaveFile::loadImages(Context &context)
 {
     QSize cardDimensions = context.cardSize();
-    context.cardBackPortrait = retrieveImage("cardBackPortrait", cardDimensions);
+    context.cardBack.background = retrieveImage("cardBack.background", cardDimensions);
+    context.cardBack.foreground = retrieveImage("cardBack.foreground", context.cardBack.foreGroundSize());
     context.mainCharacter.regularPortrait = retrieveImage("mainCharacter.regularPortrait", cardDimensions);
     context.mainCharacter.specialPortrait = retrieveImage("mainCharacter.specialPortrait", cardDimensions);
     context.minorCharacter.regularPortrait = retrieveImage("minorCharacter.regularPortrait", cardDimensions);
@@ -134,7 +135,8 @@ void SaveFile::saveCards(const QList<QPointer<CardInfo>> &cardInfoPointers, QJso
 void SaveFile::saveImages(Context &context)
 {
     registerImage(context.special.frame.first, "specialFrame");
-    registerImage(context.cardBackPortrait.first, "cardBackPortrait");
+    registerImage(context.cardBack.background.first, "cardBack.background");
+    registerImage(context.cardBack.foreground.first, "cardBack.foreground");
     registerImage(context.mainCharacter.regularPortrait.first, "mainCharacter.regularPortrait");
     registerImage(context.mainCharacter.specialPortrait.first, "mainCharacter.specialPortrait");
     registerImage(context.minorCharacter.regularPortrait.first, "minorCharacter.regularPortrait");

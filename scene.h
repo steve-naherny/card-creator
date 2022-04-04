@@ -14,6 +14,7 @@ class Scene : public QGraphicsScene
 public:
   Scene();
 
+  void clear();
   void refresh();
 
   Deck d;

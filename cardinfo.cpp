@@ -62,9 +62,6 @@ QString CardInfo::toString(PlayType pt)
 
 QGraphicsItemGroup *CardInfo::generateCardBackGraphicsItem(Context &context, QGraphicsScene *scene)
 {
-    const double frameRatio = .7;
-    const double titleRatio = .3;
-
     QGraphicsItemGroup *group = new QGraphicsItemGroup;
     QGraphicsPixmapItem *background = new QGraphicsPixmapItem(group);
     background->setPixmap(context.cardBack.background.second);
@@ -74,8 +71,8 @@ QGraphicsItemGroup *CardInfo::generateCardBackGraphicsItem(Context &context, QGr
 
     scene->addItem(group);
 
-    int frameY = background->boundingRect().height() * frameRatio;
-    frame->moveBy(0, frameY);
+    QPointF pos = context.cardBack.foreGroundPosition();
+    frame->moveBy(pos.x(), pos.y());
 
     return group;
 }

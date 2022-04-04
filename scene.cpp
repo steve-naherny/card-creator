@@ -4,7 +4,12 @@
 constexpr int buffer = 25;
 Scene::Scene()
 {
-    setBackgroundBrush(QBrush(QColor("#fffdd0")));
+}
+
+void Scene::clear()
+{
+    d.cards.clear();
+    QGraphicsScene::clear();
 }
 
 void Scene::refresh()
@@ -14,26 +19,26 @@ void Scene::refresh()
     QSize cardDimensions = d.context.cardSize();
     for(auto card : d.cards)
     {
-       static int x = 0;
-       auto item = card->generateGraphicsItem(d.context, this);
-       item->moveBy(x + buffer, y + buffer);
-       x += cardDimensions.width();
-       if(x + cardDimensions.width() > 5 * cardDimensions.width())
-       {
-           x = 0;
-           y += cardDimensions.height() + buffer;
-       }
+        static int x = 0;
+        auto item = card->generateGraphicsItem(d.context, this);
+        item->moveBy(x + buffer, y + buffer);
+        x += cardDimensions.width();
+        if(x + cardDimensions.width() > 5 * cardDimensions.width())
+        {
+            x = 0;
+            y += cardDimensions.height() + buffer;
+        }
     }
 
-  for(int i = 0; i < 9; i++)
-  {
-      auto item = CardInfo::generateCardBackGraphicsItem(d.context, this);
-      item->moveBy(x + buffer, y + buffer);
-      x += cardDimensions.width();
-      if(x + cardDimensions.width() > 5 * cardDimensions.width())
-      {
-          x = 0;
-          y += cardDimensions.height() + buffer;
-      }
-  }
+    for(int i = 0; i < 9; i++)
+    {
+        auto item = CardInfo::generateCardBackGraphicsItem(d.context, this);
+        item->moveBy(x + buffer, y + buffer);
+        x += cardDimensions.width();
+        if(x + cardDimensions.width() > 5 * cardDimensions.width())
+        {
+            x = 0;
+            y += cardDimensions.height() + buffer;
+        }
+    }
 }
