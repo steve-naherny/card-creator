@@ -38,6 +38,9 @@ set(PROJECT_SOURCES
         scene.h
         scene.cpp
 
+        view.h
+        view.cpp
+
         ${TS_FILES}
 )
 

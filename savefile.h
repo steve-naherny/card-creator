@@ -21,7 +21,7 @@ private:
     void saveCards(const QList<QPointer<CardInfo>> &cards, QJsonObject &json);
     void saveImages(Context &context);
     QString registerImage(const QString &imagePath, const QString &imageName);
-    QPair<QString, QPixmap> retrieveImage(const QString &imageName, const QSize &size);
+    Context::Image retrieveImage(const QString &imageName, const QSize &size);
     QString path;
 };
 

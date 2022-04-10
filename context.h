@@ -7,7 +7,7 @@
 #include <QFont>
 
 // These values need to be changed to where the user can set them.
-static int cardWidth = 200;
+static int cardWidth = 450;
 static double cardHeightRatio = 1.36;
 
 struct Context
@@ -57,21 +57,38 @@ struct Context
         return QFont("calibri", 14, 4);
     }
 
+    struct Image
+    {
+        Image()
+        {
+
+        }
+        Image(Image &other)
+        {
+            path = other.path;
+            pixmap = other.pixmap;
+            size = other.size;
+        }
+        QString path;
+        QPixmap pixmap;
+        QSize size;
+    };
+
     QString path;
     struct Character
     {
         QString name;
         int health = 0;
-        QPair<QString, QPixmap> specialPortrait;
-        QPair<QString, QPixmap> regularPortrait;
+        Image specialPortrait;
+        Image regularPortrait;
     };
 
     Character mainCharacter, minorCharacter;
 
     struct CardBack
     {
-        QPair<QString, QPixmap> foreground;
-        QPair<QString, QPixmap> background;
+        Image foreground;
+        Image background;
 
         static QPointF foreGroundPosition()
         {
@@ -91,15 +108,15 @@ struct Context
     struct SpecialInfo
     {
         QFont font;
-        QPair<QString, QPixmap> frame;
+        Image frame;
     } special;
 
     struct UniqueInfo
     {
         QFont font;
-        QPair<QString, QPixmap> frame;
-        QPair<QString, QPixmap> attackFrame;
-        QPair<QString, QPixmap> defenseFrame;
+        Image frame;
+        Image attackFrame;
+        Image defenseFrame;
 
 
         static QPointF firstCombatPosition()
@@ -146,7 +163,7 @@ struct Context
 
     struct CombatInfo
     {
-        QPair<QString, QPixmap> frame;
+        Image frame;
 
         static QSize frameSize()
         {

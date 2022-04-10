@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "savefile.h"
+#include "scene.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -16,7 +17,13 @@ public:
     ~MainWindow();
 
 private:
+    void connectImageButtons();
+    void connectCardGroup();
+    void connectMainGroup();
+    void connectMinorGroup();
+
     SaveFile saveFile;
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui = nullptr;
+    Scene *scene = nullptr;
 };
 #endif // MAINWINDOW_H

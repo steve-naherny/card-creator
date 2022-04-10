@@ -8,7 +8,7 @@
 #include <QJsonArray>
 #include <QDir>
 
-QPair<QString, QPixmap> SaveFile::retrieveImage(const QString &imageName, const QSize &size)
+Context::Image SaveFile::retrieveImage(const QString &imageName, const QSize &size)
 {
     QString fullImagePath = path + "/" + imageName + ".png";
     QPixmap pixmap = QPixmap(fullImagePath).scaled(size, Qt::KeepAspectRatioByExpanding);
@@ -17,7 +17,12 @@ QPair<QString, QPixmap> SaveFile::retrieveImage(const QString &imageName, const 
         fullImagePath = path + "/" + imageName + ".jpg";
         pixmap = QPixmap(fullImagePath).scaled(size, Qt::KeepAspectRatioByExpanding);
     }
-    return qMakePair(fullImagePath, pixmap);
+
+    Context::Image image;
+    image.path = fullImagePath;
+    image.pixmap = pixmap;
+    image.size = size;
+    return image;
 }
 
 void SaveFile::load(Deck &deck, const QString &_path)
@@ -108,7 +113,7 @@ void SaveFile::saveContext(Context &context, QJsonObject &json)
     QJsonObject unique
     {
         {"font", context.unique.font.toString()},
-        {"frame", context.unique.frame.first}
+        {"frame", context.unique.frame.path }
     };
     json.insert("unique", unique);
 }
@@ -134,17 +139,17 @@ void SaveFile::saveCards(const QList<QPointer<CardInfo>> &cardInfoPointers, QJso
 
 void SaveFile::saveImages(Context &context)
 {
-    registerImage(context.special.frame.first, "specialFrame");
-    registerImage(context.cardBack.background.first, "cardBack.background");
-    registerImage(context.cardBack.foreground.first, "cardBack.foreground");
-    registerImage(context.mainCharacter.regularPortrait.first, "mainCharacter.regularPortrait");
-    registerImage(context.mainCharacter.specialPortrait.first, "mainCharacter.specialPortrait");
-    registerImage(context.minorCharacter.regularPortrait.first, "minorCharacter.regularPortrait");
-    registerImage(context.minorCharacter.specialPortrait.first, "minorCharacter.specialPortrait");
-    registerImage(context.special.frame.first, "special.frame");
-    registerImage(context.unique.defenseFrame.first, "unique.defenseFrame");
-    registerImage(context.unique.attackFrame.first, "unique.attackFrame");
-    registerImage(context.combat.frame.first, "combat.frame");
+    registerImage(context.special.frame.path, "specialFrame");
+    registerImage(context.cardBack.background.path, "cardBack.background");
+    registerImage(context.cardBack.foreground.path, "cardBack.foreground");
+    registerImage(context.mainCharacter.regularPortrait.path, "mainCharacter.regularPortrait");
+    registerImage(context.mainCharacter.specialPortrait.path, "mainCharacter.specialPortrait");
+    registerImage(context.minorCharacter.regularPortrait.path, "minorCharacter.regularPortrait");
+    registerImage(context.minorCharacter.specialPortrait.path, "minorCharacter.specialPortrait");
+    registerImage(context.special.frame.path, "special.frame");
+    registerImage(context.unique.defenseFrame.path, "unique.defenseFrame");
+    registerImage(context.unique.attackFrame.path, "unique.attackFrame");
+    registerImage(context.combat.frame.path, "combat.frame");
 }
 
 QString SaveFile::registerImage(const QString &imagePath, const QString &imageName)

@@ -64,10 +64,10 @@ QGraphicsItemGroup *CardInfo::generateCardBackGraphicsItem(Context &context, QGr
 {
     QGraphicsItemGroup *group = new QGraphicsItemGroup;
     QGraphicsPixmapItem *background = new QGraphicsPixmapItem(group);
-    background->setPixmap(context.cardBack.background.second);
+    background->setPixmap(context.cardBack.background.pixmap);
 
     QGraphicsPixmapItem *frame = new QGraphicsPixmapItem(group);
-    frame->setPixmap(context.cardBack.foreground.second);
+    frame->setPixmap(context.cardBack.foreground.pixmap);
 
     scene->addItem(group);
 
@@ -81,10 +81,10 @@ QGraphicsItemGroup *CardInfo::generateCombatCard(const Context::Character &chara
 {
     QGraphicsItemGroup *group = new QGraphicsItemGroup;
     QGraphicsPixmapItem *background = new QGraphicsPixmapItem(group);
-    background->setPixmap(character.regularPortrait.second);
+    background->setPixmap(character.regularPortrait.pixmap);
 
     QGraphicsPixmapItem *frame = new QGraphicsPixmapItem(group);
-    frame->setPixmap(combat.frame.second);
+    frame->setPixmap(combat.frame.pixmap);
 
     QFont font = Context::combatFont();
     QGraphicsTextItem * attackItem = new QGraphicsTextItem(group);
@@ -112,10 +112,10 @@ QGraphicsItemGroup *CardInfo::generateSpecialCard(const Context::Character &char
 {
     QGraphicsItemGroup *group = new QGraphicsItemGroup;
     QGraphicsPixmapItem *background = new QGraphicsPixmapItem(group);
-    background->setPixmap(character.specialPortrait.second);
+    background->setPixmap(character.specialPortrait.pixmap);
 
     QGraphicsPixmapItem *frame = new QGraphicsPixmapItem(group);
-    frame->setPixmap(info.frame.second);
+    frame->setPixmap(info.frame.pixmap);
 
     struct TextData
     {
@@ -160,10 +160,10 @@ QGraphicsItemGroup *CardInfo::generateUniqueCard(const Context::Character &chara
 {
     QGraphicsItemGroup *group = new QGraphicsItemGroup;
     QGraphicsPixmapItem *background = new QGraphicsPixmapItem(group);
-    background->setPixmap(character.specialPortrait.second);
+    background->setPixmap(character.specialPortrait.pixmap);
 
     QGraphicsPixmapItem *frame = new QGraphicsPixmapItem(group);
-    frame->setPixmap(info.frame.second);
+    frame->setPixmap(info.frame.pixmap);
 
     struct TextData
     {
@@ -186,7 +186,7 @@ QGraphicsItemGroup *CardInfo::generateUniqueCard(const Context::Character &chara
     {
         datas.append({attack,Context::combatFont(),combatPositions.first(), QColor(Qt::white)});
         QGraphicsPixmapItem *combatFrame = new QGraphicsPixmapItem(group);
-        combatFrame->setPixmap(info.attackFrame.second);
+        combatFrame->setPixmap(info.attackFrame.pixmap);
         combatFrames.append(combatFrame);
     }
 
@@ -194,7 +194,7 @@ QGraphicsItemGroup *CardInfo::generateUniqueCard(const Context::Character &chara
     {
         datas.append({defense,Context::combatFont(),combatPositions.last(), QColor(Qt::white)});
         QGraphicsPixmapItem *combatFrame = new QGraphicsPixmapItem(group);
-        combatFrame->setPixmap(info.defenseFrame.second);
+        combatFrame->setPixmap(info.defenseFrame.pixmap);
         combatFrames.append(combatFrame);
     }
 
